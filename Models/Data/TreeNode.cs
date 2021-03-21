@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace L3_DAVH_AFPE.Models.Data
 {
-    public class TreeNode
+    public class TreeNode<T> where T : IComparable
     {
+        public int key, height = 0;
+        public TreeNode<T> left, right;
+
+        
+        
     }
 }
