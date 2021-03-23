@@ -38,11 +38,11 @@ namespace L3_DAVH_AFPE.Models.Data
             {
                 pNode.right = Insert(newvalue, pNode.right);
             }
-            else { 
+            else { // If value of node is repeated, it wont be inserted.
                 return pNode;
             }
 
-            pNode.height = 1 + max(height(pNode.left), height(pNode.right));
+            pNode.height = 1 + max(height(pNode.left), height(pNode.right)); 
 
             int balance = getBalance(pNode);
 
@@ -67,6 +67,7 @@ namespace L3_DAVH_AFPE.Models.Data
             }
             return pNode;
         }
+        //Get the updated height of the entire tree
         int height(TreeNode<T> N)
         {
             if (N == null)
@@ -74,6 +75,9 @@ namespace L3_DAVH_AFPE.Models.Data
 
             return N.height;
         }
+        //Function will validate the condition
+        //If it is true will return a 
+        //If it is false will return b
         int max(int a, int b)
         {
             return (a > b) ? a : b;
@@ -107,6 +111,7 @@ namespace L3_DAVH_AFPE.Models.Data
             return y;
         }
 
+        //Get the balance factor of ancestor node to check whether this node became unbalanced
         int getBalance(TreeNode<T> N)
         {
             if (N == null)
