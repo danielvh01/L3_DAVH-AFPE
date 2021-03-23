@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace L3_DAVH_AFPE.Models.Data
 {
-    public class Drug
+    public class Drug : IComparable
     {
         public int numberline { get; set; }
         public string name { get; set; }

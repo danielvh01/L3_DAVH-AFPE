@@ -8,10 +8,13 @@ namespace L3_DAVH_AFPE.Models.Data
 {
     public class DoubleLinkedList<T> : IEnumerable<T> where T : IComparable
     {
+        #region Variables
         Node<T> First;
         Node<T> End;
         public int Length = 0;
+        #endregion
 
+        #region Methods
         public void InsertAtStart(T value)
         {
             Node<T> node = new Node<T>();
@@ -290,5 +293,7 @@ namespace L3_DAVH_AFPE.Models.Data
         {
             return GetEnumerator();
         }
+
+        #endregion
     }
 }

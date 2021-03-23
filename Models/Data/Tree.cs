@@ -7,6 +7,7 @@ namespace L3_DAVH_AFPE.Models.Data
 {
     public class Tree<T> where T : IComparable
     {
+        #region Variables
         public TreeNode<T> Root { get; set; }
         public TreeNode<T> Work { get; set; }
 
@@ -15,8 +16,9 @@ namespace L3_DAVH_AFPE.Models.Data
         {
             Root = null;
         }
+        #endregion
 
-
+        #region Methods
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
             TreeNode<T> temp = null;
@@ -203,6 +205,29 @@ namespace L3_DAVH_AFPE.Models.Data
                     node.right = Delete(node.right, node.value);
                 }
             }
+            node.height =  max(height(node.left), height(node.right))+1;
+
+            int balance = getBalance(node);
+
+            if (balance > 1 && getBalance(node.left) >=0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
+                                                                         //Left->Left
+            {
+                return rightRotation(node);
+            }
+            if (balance > 1 && getBalance(node.left) < 0) // Left->Right case
+            {
+                node.left = leftRotate(node.left);
+                return rightRotation(node);
+            }
+            if (balance < -1 && getBalance(node.right) <= 0)// Right->Right Case
+            {
+                return leftRotate(node);
+            }
+            if (balance < -1 && getBalance(node.right) > 0)  // Right->Left Case
+            {
+                node.right = rightRotation(node.right);
+                return leftRotate(node);
+            }
             return node;
         }
 
@@ -223,7 +248,7 @@ namespace L3_DAVH_AFPE.Models.Data
             return minimum;
 
         }
-
+        #endregion
 
     }
 }
