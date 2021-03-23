@@ -46,21 +46,21 @@ namespace L3_DAVH_AFPE.Models.Data
 
             int balance = getBalance(pNode);
 
-            if (balance > 1 ) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) < 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
                                //Left->Left
             {
                 return rightRotation(pNode);
             }
-            if (balance < -1 ) // Right->Right case
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) > 0) // Right->Right case
             {
                 return leftRotate(pNode);
             }
-            if (balance > 1)// Left->Right Case
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) > 0)// Left->Right Case
             {
                 pNode.left = leftRotate(pNode.left);
                 return rightRotation(pNode);
             }
-            if (balance < -1)  // Right->Left Case
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)  // Right->Left Case
             {
                 pNode.right = leftRotate(pNode.right);
                 return leftRotate(pNode);
