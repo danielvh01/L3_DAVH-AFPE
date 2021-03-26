@@ -7,6 +7,7 @@ namespace L3_DAVH_AFPE.Models.Data
 {
     public class Tree<T> where T : IComparable
     {
+        #region Variables and instances
         public TreeNode<T> Root { get; set; }
         public TreeNode<T> Work { get; set; }
 
@@ -15,8 +16,9 @@ namespace L3_DAVH_AFPE.Models.Data
         {
             Root = null;
         }
+        #endregion
 
-
+        #region Methods
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
             if (pNode == null)
@@ -241,6 +243,6 @@ namespace L3_DAVH_AFPE.Models.Data
 
             return y;
         }
-
+        #endregion
     }
 }

@@ -16,12 +16,16 @@ namespace L3_DAVH_AFPE.Controllers
 {
     public class PharmacyController : Controller
     {
+        #region Variables and instances
         public string pathito = "";
         private readonly IHostingEnvironment hostingEnvironment;
         public PharmacyController(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
         }
+        #endregion
+
+        #region Methods
         // GET: PharmacyController
         public ActionResult Index()
         {
@@ -236,6 +240,6 @@ namespace L3_DAVH_AFPE.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        #endregion
     }
 }
