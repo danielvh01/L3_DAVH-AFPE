@@ -21,7 +21,7 @@ namespace L3_DAVH_AFPE.Models.Data
         #region Methods
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
-            TreeNode<T> temp = null;
+            TreeNode<T> temp;
             if (pNode == null)
             {
                 temp = new TreeNode<T>(newvalue);
@@ -64,7 +64,7 @@ namespace L3_DAVH_AFPE.Models.Data
             }
             if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)  // Right->Left Case
             {
-                pNode.right = leftRotate(pNode.right);
+                pNode.right = rightRotation(pNode.right);
                 return leftRotate(pNode);
             }
             return pNode;
@@ -88,7 +88,7 @@ namespace L3_DAVH_AFPE.Models.Data
         public TreeNode<T> rightRotation(TreeNode<T> node)
         {
             TreeNode<T> x = node.left;
-            TreeNode<T> T2 = node.right;
+            TreeNode<T> T2 = x.right;
 
             x.right = node;
             node.left = T2;

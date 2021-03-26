@@ -33,9 +33,9 @@ namespace L3_DAVH_AFPE.Models.Data
         #endregion
 
         #region Methods
-        public string getPrice(string product)
+        public string getPrice(int product)
         {
-            return "$" + Instance.inventory.Get(Instance.guide.Find(new Drug { name = product, numberline = 0 }, guide.Root).value.numberline).Price;
+            return "$" + Instance.inventory.Get(product).Price;
         }
 
         public void Traverse(TreeNode<Drug> node)
@@ -48,7 +48,7 @@ namespace L3_DAVH_AFPE.Models.Data
             {
                 Traverse(node.right);
             }
-            options.InsertAtEnd(node.value.name + " - " + getPrice(node.value.name));
+            options.InsertAtEnd(node.value.name + " - " + getPrice(node.value.numberline));
             if (node.left != null)
             {
                 Traverse(node.left);

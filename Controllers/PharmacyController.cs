@@ -161,7 +161,6 @@ namespace L3_DAVH_AFPE.Controllers
         [HttpPost]
         public ActionResult Import(FileModel model)
         {
-            int contador = 0;
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -200,15 +199,17 @@ namespace L3_DAVH_AFPE.Controllers
                             newDrug.Name += "-" + ++cant;
                         }
                         Singleton.Instance.inventory.InsertAtEnd(newDrug);
-                        contador++;
                         if (newDrug.Quantity > 0)
                         {
                             int cont = 0;
-                            while (Singleton.Instance.guide.Find(new Drug { name = Drugss[1], numberline = contador }, Singleton.Instance.guide.Root) != null)
+                            if (Drugss[0] == "104") 
+                            { 
+                            }
+                            while (Singleton.Instance.guide.Find(new Drug { name = Drugss[1], numberline = int.Parse(Drugss[0]) }, Singleton.Instance.guide.Root) != null)
                             {
                                 Drugss[1] += "-" + ++cont;
                             }
-                            Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = contador }, Singleton.Instance.guide.Root);
+                            Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = int.Parse(Drugss[0]) }, Singleton.Instance.guide.Root);
                         }
                     }
                     catch (Exception e)
