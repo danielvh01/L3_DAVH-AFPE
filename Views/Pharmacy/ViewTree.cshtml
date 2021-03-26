@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "ViewTree";
+}
+
+<h1>Guide</h1>
+
+<a class="btn btn-success" asp-action="DownloadFile">Export Guide</a>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<pre>
+@L3_DAVH_AFPE.Models.Data.Singleton.Instance.tree
+</pre>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<L3_DAVH_AFPE.Models.Cart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of orders</h1>
+
+<p>
+    <a asp-action="Create">Make an Order</a> -
+    <a asp-action="ViewTree">View Tree</a> -
+    <a class="btn btn-success" asp-action="Resuply">Resuply</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.clientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NIT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.clientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NIT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>            
+                    @Html.ActionLink("Delete", "Delete", new { item.ID });
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
