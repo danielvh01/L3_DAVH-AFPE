@@ -75,7 +75,7 @@ namespace L3_DAVH_AFPE.Controllers
                 x.Quantity--;
                 if (x.Quantity == 0)
                 {
-                    Singleton.Instance.guide.Delete(Singleton.Instance.guide.Root, obj);
+                    Singleton.Instance.guide.Root = Singleton.Instance.guide.Delete(Singleton.Instance.guide.Root, obj);
                 }
                 return RedirectToAction(nameof(Index));
             }

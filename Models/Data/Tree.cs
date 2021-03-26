@@ -147,6 +147,29 @@ namespace L3_DAVH_AFPE.Models.Data
                     node.right = Delete(node.right, node.value);
                 }
             }
+            node.height = max(height(node.left), height(node.right)) + 1;
+
+            int balance = getBalance(node);
+
+            if (balance > 1 && getBalance(node.left) >= 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
+                                                           //Left->Left
+            {
+                return rightRotate(node);
+            }
+            if (balance > 1 && getBalance(node.left) < 0) // Left->Right case
+            {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+            if (balance < -1 && getBalance(node.right) <= 0)// Right->Right Case
+            {
+                return leftRotate(node);
+            }
+            if (balance < -1 && getBalance(node.right) > 0)  // Right->Left Case
+            {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
             return node;
         }
 
