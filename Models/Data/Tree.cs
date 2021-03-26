@@ -7,7 +7,6 @@ namespace L3_DAVH_AFPE.Models.Data
 {
     public class Tree<T> where T : IComparable
     {
-        #region Variables
         public TreeNode<T> Root { get; set; }
         public TreeNode<T> Work { get; set; }
 
@@ -16,21 +15,14 @@ namespace L3_DAVH_AFPE.Models.Data
         {
             Root = null;
         }
-        #endregion
 
-        #region Methods
+
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
-            TreeNode<T> temp;
             if (pNode == null)
             {
-                temp = new TreeNode<T>(newvalue);
-                if (lenght == 0)
-                {
-                    Root = temp;
-                }
                 lenght++;
-                return temp;
+                return new TreeNode<T>(newvalue); ;
             }
             if (newvalue.CompareTo(pNode.value) < 0)
             {
@@ -40,88 +32,38 @@ namespace L3_DAVH_AFPE.Models.Data
             {
                 pNode.right = Insert(newvalue, pNode.right);
             }
-            else { // If value of node is repeated, it wont be inserted.
+            else
+            {
                 return pNode;
             }
-
-            pNode.height = 1 + max(height(pNode.left), height(pNode.right)); 
+            pNode.height = 1 + max(height(pNode.left), height(pNode.right));
 
             int balance = getBalance(pNode);
 
-            if (balance > 1 && newvalue.CompareTo(pNode.left.value) < 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
-                               //Left->Left
-            {
-                return rightRotation(pNode);
-            }
-            if (balance < -1 && newvalue.CompareTo(pNode.right.value) > 0) // Right->Right case
-            {
+            //Left Left Case
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) < 0)
+                return rightRotate(pNode);
+
+            // Right Right Case
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) > 0)
                 return leftRotate(pNode);
-            }
-            if (balance > 1 && newvalue.CompareTo(pNode.left.value) > 0)// Left->Right Case
+
+            // Left Right Case
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) > 0)
             {
                 pNode.left = leftRotate(pNode.left);
-                return rightRotation(pNode);
+                return rightRotate(pNode);
             }
-            if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)  // Right->Left Case
+
+            // Right Left Case
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)
             {
-                pNode.right = rightRotation(pNode.right);
+                pNode.right = rightRotate(pNode.right);
                 return leftRotate(pNode);
             }
             return pNode;
+
         }
-        //Get the updated height of the entire tree
-        int height(TreeNode<T> N)
-        {
-            if (N == null)
-                return 0;
-
-            return N.height;
-        }
-        //Function will validate the condition
-        //If it is true will return a 
-        //If it is false will return b
-        int max(int a, int b)
-        {
-            return (a > b) ? a : b;
-        }
-
-        public TreeNode<T> rightRotation(TreeNode<T> node)
-        {
-            TreeNode<T> x = node.left;
-            TreeNode<T> T2 = x.right;
-
-            x.right = node;
-            node.left = T2;
-
-            node.height = (max(height(node.left),height(node.right))+1);
-            x.height = (max(height(x.left), height(x.right))+1);
-
-            return x;
-        }
-
-        public TreeNode<T> leftRotate(TreeNode<T> x)
-        {
-            TreeNode<T> y = x.right;
-            TreeNode<T> T2 = y.left;
-            
-            y.left = x;
-            x.right = T2;
-            
-            x.height = (max(height(x.left),height(x.right)) + 1);
-            y.height = (max(height(y.left),height(y.right)) + 1);
-            
-            return y;
-        }
-
-        //Get the balance factor of ancestor node to check whether this node became unbalanced
-        int getBalance(TreeNode<T> N)
-        {
-            if (N == null)
-                return 0;
-
-            return height(N.left) - height(N.right);
-        }
-
         public TreeNode<T> Find(T value, TreeNode<T> node)
         {
             if (node != null)
@@ -205,29 +147,6 @@ namespace L3_DAVH_AFPE.Models.Data
                     node.right = Delete(node.right, node.value);
                 }
             }
-            node.height =  max(height(node.left), height(node.right))+1;
-
-            int balance = getBalance(node);
-
-            if (balance > 1 && getBalance(node.left) >=0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
-                                                                         //Left->Left
-            {
-                return rightRotation(node);
-            }
-            if (balance > 1 && getBalance(node.left) < 0) // Left->Right case
-            {
-                node.left = leftRotate(node.left);
-                return rightRotation(node);
-            }
-            if (balance < -1 && getBalance(node.right) <= 0)// Right->Right Case
-            {
-                return leftRotate(node);
-            }
-            if (balance < -1 && getBalance(node.right) > 0)  // Right->Left Case
-            {
-                node.right = rightRotation(node.right);
-                return leftRotate(node);
-            }
             return node;
         }
 
@@ -248,7 +167,57 @@ namespace L3_DAVH_AFPE.Models.Data
             return minimum;
 
         }
-        #endregion
+
+        int max(int a, int b)
+        {
+            return (a > b) ? a : b;
+        }
+
+        int height(TreeNode<T> N)
+        {
+            if (N == null)
+                return 0;
+
+            return N.height;
+        }
+
+        int getBalance(TreeNode<T> N)
+        {
+            if (N == null)
+            {
+                return 0;
+            }
+
+            return height(N.left) - height(N.right);
+        }
+
+        TreeNode<T> rightRotate(TreeNode<T> y)
+        {
+            TreeNode<T> x = y.left;
+            TreeNode<T> z = x.right;
+
+            x.right = y;
+            y.left = z;
+
+            y.height = max(height(y.left), height(y.right)) + 1;
+            x.height = max(height(x.left), height(x.right)) + 1;
+
+            return x;
+        }
+
+        TreeNode<T> leftRotate(TreeNode<T> x)
+        {
+            TreeNode<T> y = x.right;
+            TreeNode<T> z = y.left;
+
+            y.left = x;
+            x.right = z;
+
+            x.height = max(height(x.left), height(x.right)) + 1;
+            y.height = max(height(y.left), height(y.right)) + 1;
+
+            return y;
+        }
 
     }
 }
