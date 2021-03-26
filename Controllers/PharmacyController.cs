@@ -37,10 +37,11 @@ namespace L3_DAVH_AFPE.Controllers
         // GET: PharmacyController/Create
         public ActionResult Create()
         {
-            if (Singleton.Instance.options.Length == 0)
+            while (Singleton.Instance.options.Length < 0)
             {
-                Singleton.Instance.Traverse(Singleton.Instance.guide.Root);
+                Singleton.Instance.options.Delete(0);
             }
+            Singleton.Instance.Traverse(Singleton.Instance.guide.Root);
             return View();
         }
 
