@@ -8,7 +8,6 @@ namespace L3_DAVH_AFPE.Models.Data
 
     public sealed class Singleton
     {
-        #region Variables and Objects
         public DoubleLinkedList<string> options = new DoubleLinkedList<string>();
         private readonly static Singleton _instance = new Singleton();
         public DoubleLinkedList<Cart> orders;
@@ -31,9 +30,6 @@ namespace L3_DAVH_AFPE.Models.Data
                 return _instance;
             }
         }
-        #endregion
-
-        #region Methods
         public string getPrice(int product)
         {
             return "$" + Instance.inventory.Get(product).Price;
@@ -88,6 +84,6 @@ namespace L3_DAVH_AFPE.Models.Data
             }
             return tree;
         }
-        #endregion
+
     }
 }
