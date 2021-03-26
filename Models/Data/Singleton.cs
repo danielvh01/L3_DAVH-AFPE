@@ -16,6 +16,7 @@ namespace L3_DAVH_AFPE.Models.Data
         public Tree<Drug> guide;
         public bool fileUpload = false;
         public string tree = "";
+        public int contOrder = 0;
         private Singleton()
         {
             orders = new DoubleLinkedList<Cart>();
