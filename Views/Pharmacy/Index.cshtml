@@ -45,7 +45,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.amount)
                 </td>
+                <td>            
+                    @Html.ActionLink("Delete", "Delete", new { item.ID });
+                </td>
             </tr>
-        }
-    </tbody>
-</table>
+    }
+        </tbody>
+    </table>

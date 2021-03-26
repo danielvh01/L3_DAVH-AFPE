@@ -16,16 +16,34 @@ namespace L3_DAVH_AFPE.Controllers
 {
     public class PharmacyController : Controller
     {
+        #region Variables and instances
         public string pathito = "";
         private readonly IHostingEnvironment hostingEnvironment;
         public PharmacyController(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
         }
+        #endregion
+
+        #region Methods
         // GET: PharmacyController
         public ActionResult Index()
         {
             return View(Singleton.Instance.orders);
+        }
+        public ActionResult Resuply()
+        {
+            for (int i = 0; i < Models.Data.Singleton.Instance.inventory.Length; i++)
+            {
+                PharmacyModel item = Models.Data.Singleton.Instance.inventory.Get(i);
+                if (item.Quantity == 0)
+                {
+                    Random r = new Random();
+                    item.Quantity = r.Next(1, 15);
+                    Singleton.Instance.guide.Insert(new Drug { name = item.Name, numberline = i }, Singleton.Instance.guide.Root);
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PharmacyController/Details/5
@@ -55,6 +73,7 @@ namespace L3_DAVH_AFPE.Controllers
             {
                 var newOrder = new Cart
                 {
+                    ID = Singleton.Instance.contOrder++,
                     clientName = collection["clientName"],
                     NIT = collection["NIT"],
                     address = collection["address"],
@@ -70,7 +89,7 @@ namespace L3_DAVH_AFPE.Controllers
                 newOrder.amount = double.Parse(a[b].Replace('$', ' ').Trim());
                 Singleton.Instance.orders.InsertAtEnd(newOrder);
                 Drug obj = new Drug { name = name, numberline = 0 };
-                int idx = Singleton.Instance.guide.Find(obj, Singleton.Instance.guide.Root).value.numberline;
+                    int idx = Singleton.Instance.guide.Find(obj, Singleton.Instance.guide.Root).value.numberline;
                 PharmacyModel x = Singleton.Instance.inventory.Get(idx);
                 x.Quantity--;
                 if (x.Quantity == 0)
@@ -107,20 +126,22 @@ namespace L3_DAVH_AFPE.Controllers
             }
         }
 
-        // GET: PharmacyController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+        // GET: PlayerController/Delete/5
+        public ActionResult Delete(int ID)
+        {                        
+            Cart drug = Singleton.Instance.orders.Get(ID);                                                        
+            return View(drug);                      
         }
 
-        // POST: PharmacyController/Delete/5
+        // POST: PlayerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int ID, IFormCollection collection)
         {
             try
-            {
-                return RedirectToAction(nameof(Index));
+            {                                                                                  
+                Singleton.Instance.orders.Delete(ID);                                                                                            
+                return RedirectToAction(nameof(Index));                               
             }
             catch
             {
@@ -161,7 +182,6 @@ namespace L3_DAVH_AFPE.Controllers
         [HttpPost]
         public ActionResult Import(FileModel model)
         {
-            int contador = 0;
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -220,6 +240,6 @@ namespace L3_DAVH_AFPE.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        #endregion
     }
 }
