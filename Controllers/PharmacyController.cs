@@ -162,12 +162,15 @@ namespace L3_DAVH_AFPE.Controllers
         }
         public ActionResult ViewTree()
         {
+            Singleton.Instance.tree = "";
             Singleton.Instance.PrintTree(Singleton.Instance.guide.Root);
             return View();
         }
         public ActionResult DownloadFile()
         {
-            StreamWriter file = new StreamWriter("Guide.txt", true);
+            Singleton.Instance.tree = "";
+            System.IO.File.Delete(@"Guide.txt");
+            StreamWriter file = new StreamWriter("Guide.txt", true);               
             file.Write(Singleton.Instance.PrintTree(Singleton.Instance.guide.Root));
             file.Close();
             byte[] fileBytes = System.IO.File.ReadAllBytes("Guide.txt");
