@@ -49,7 +49,7 @@ namespace L3_DAVH_AFPE.Models.Data
             {
                 Traverse(node.right);
             }
-            options.InsertAtEnd(node.value.name + " - " + getPrice(node.value.numberline));
+            options.InsertAtEnd(node.value.name + " ( " + getPrice(node.value.numberline) + " ) ");
             if (node.left != null)
             {
                 Traverse(node.left);

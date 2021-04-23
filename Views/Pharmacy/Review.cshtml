@@ -1,0 +1,47 @@
+﻿@model L3_DAVH_AFPE.Models.Cart
+
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h1>Review</h1>
+
+<div>
+    <h4>Cart</h4>
+    <hr />
+    <dl class="row">       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.clientName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.clientName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NIT)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NIT)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.product)
+        </dd>
+    </dl>
+</div>
+<div>
+       <a asp-action="Index">Back to List</a>
+</div>
