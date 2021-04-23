@@ -24,7 +24,7 @@ namespace L3_DAVH_AFPE.Controllers
             this.hostingEnvironment = hostingEnvironment;
         }
         #endregion
-
+        //MASTER
         #region Methods
         // GET: PharmacyController
         public ActionResult Index()
