@@ -7,27 +7,33 @@ namespace DataStructures
         #region Variables and instances
         public TreeNode<T> Root { get; set; }
         public TreeNode<T> Work { get; set; }
-
         public int lenght = 0;
         public AVLtree()
         {
             Root = null;
+            Work = null;
         }
         #endregion
 
         #region Methods
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
+            TreeNode<T> temp = null;
             if (pNode == null)
             {
+                temp = new TreeNode<T>(newvalue);
+                if (lenght == 0)
+                {
+                    Root = temp;
+                }
                 lenght++;
-                return new TreeNode<T>(newvalue); ;
+                return temp;
             }
-            if (newvalue.CompareTo(pNode.value) < 0)
+            if (newvalue.CompareTo(pNode.value) > 0)
             {
                 pNode.left = Insert(newvalue, pNode.left);
             }
-            else if (newvalue.CompareTo(pNode.value) > 0)
+            else if (newvalue.CompareTo(pNode.value) < 0)
             {
                 pNode.right = Insert(newvalue, pNode.right);
             }
@@ -40,22 +46,22 @@ namespace DataStructures
             int balance = getBalance(pNode);
 
             //Left Left Case
-            if (balance > 1 && newvalue.CompareTo(pNode.left.value) < 0)
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) > 0)
                 return rightRotate(pNode);
 
             // Right Right Case
-            if (balance < -1 && newvalue.CompareTo(pNode.right.value) > 0)
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)
                 return leftRotate(pNode);
 
             // Left Right Case
-            if (balance > 1 && newvalue.CompareTo(pNode.left.value) > 0)
+            if (balance > 1 && newvalue.CompareTo(pNode.left.value) < 0)
             {
                 pNode.left = leftRotate(pNode.left);
                 return rightRotate(pNode);
             }
 
             // Right Left Case
-            if (balance < -1 && newvalue.CompareTo(pNode.right.value) < 0)
+            if (balance < -1 && newvalue.CompareTo(pNode.right.value) > 0)
             {
                 pNode.right = rightRotate(pNode.right);
                 return leftRotate(pNode);
@@ -105,11 +111,11 @@ namespace DataStructures
                 }
             }
 
-            if (node.value.CompareTo(parent.value) < 0 && parent.left != null)
+            if (node.value.CompareTo(parent.value) > 0 && parent.left != null)
             {
                 temp = SearchParent(node, parent.left);
             }
-            if (node.value.CompareTo(parent.value) > 0 && parent.right != null)
+            if (node.value.CompareTo(parent.value) < 0 && parent.right != null)
             {
                 temp = SearchParent(node, parent.right);
             }
@@ -122,11 +128,11 @@ namespace DataStructures
             {
                 return node;
             }
-            if (value.CompareTo(node.value) < 0)
+            if (value.CompareTo(node.value) > 0)
             {
                 node.left = Delete(node.left, value);
             }
-            else if (value.CompareTo(node.value) > 0)
+            else if (value.CompareTo(node.value) < 0)
             {
                 node.right = Delete(node.right, value);
             }
@@ -150,21 +156,21 @@ namespace DataStructures
 
             int balance = getBalance(node);
 
-            if (balance > 1 && getBalance(node.left) >= 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
+            if (balance > 1 && getBalance(node.left) <= 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
                                                            //Left->Left
             {
                 return rightRotate(node);
             }
-            if (balance > 1 && getBalance(node.left) < 0) // Left->Right case
+            if (balance > 1 && getBalance(node.left) > 0) // Left->Right case
             {
                 node.left = leftRotate(node.left);
                 return rightRotate(node);
             }
-            if (balance < -1 && getBalance(node.right) <= 0)// Right->Right Case
+            if (balance < -1 && getBalance(node.right) >= 0)// Right->Right Case
             {
                 return leftRotate(node);
             }
-            if (balance < -1 && getBalance(node.right) > 0)  // Right->Left Case
+            if (balance < -1 && getBalance(node.right) < 0)  // Right->Left Case
             {
                 node.right = rightRotate(node.right);
                 return leftRotate(node);

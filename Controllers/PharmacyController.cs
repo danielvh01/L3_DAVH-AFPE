@@ -7,6 +7,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.IO;
 
+
 namespace L3_DAVH_AFPE.Controllers
 {
     public class PharmacyController : Controller
@@ -71,13 +72,12 @@ namespace L3_DAVH_AFPE.Controllers
                 Price = double.Parse(collection["Price"].ToString().Replace('$', ' ').Replace(')', ' ').Trim()),
                 Quantity = int.Parse(collection["Quantity"])
             };
-            int idx = Singleton.Instance.guide.Find(x => x.name.CompareTo(newOrder.Name), Singleton.Instance.guide.Root).numberline;
-            PharmacyModel x = Singleton.Instance.inventory.Get(idx);
+            PharmacyModel x = Singleton.Instance.inventory.Get(newOrder.Id);
             if (x.Quantity >= newOrder.Quantity)
             {
                 if (Singleton.Instance.orders.Exists(a => a.Name == x.Name))
                 {
-                    var order = Singleton.Instance.orders.Get(idx);
+                    var order = Singleton.Instance.orders.Get(newOrder.Id);
                     order.Quantity += newOrder.Quantity;
                 }
                 else
@@ -107,7 +107,7 @@ namespace L3_DAVH_AFPE.Controllers
         // GET: PharmacyController/Details/5
         public ActionResult Details(int ID)
         {
-            PharmacyModel drug = Singleton.Instance.orders.Get(ID);
+            PharmacyModel drug = Singleton.Instance.orders.Find(x => x.Name == Singleton.Instance.inventory.Get(ID).Name);
             return View(drug);
         }
 
@@ -176,7 +176,7 @@ namespace L3_DAVH_AFPE.Controllers
         // GET: PharmacyController/Delete/5
         public ActionResult Delete(int ID)
         {
-            PharmacyModel drug = Singleton.Instance.orders.Get(ID);
+            PharmacyModel drug = Singleton.Instance.orders.Find(x=> x.Name == Singleton.Instance.inventory.Get(ID).Name);
             return View(drug);
         }
 
@@ -187,9 +187,11 @@ namespace L3_DAVH_AFPE.Controllers
         {
             try
             {
-                PharmacyModel a = Singleton.Instance.orders.Get(ID);
-                Singleton.Instance.inventory.Get(a.Id).Quantity += a.Quantity;
-                Singleton.Instance.orders.Delete(ID);
+                PharmacyModel x = Singleton.Instance.inventory.Get(ID);
+                int idx = Singleton.Instance.orders.GetPositionOf(y => y.Name == x.Name);
+                PharmacyModel a = Singleton.Instance.orders.Get(idx);
+                x.Quantity += a.Quantity;
+                Singleton.Instance.orders.Delete(idx);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -316,7 +318,7 @@ namespace L3_DAVH_AFPE.Controllers
                         Drugss = txtfldprsr.ReadFields();
                         var newDrug = new PharmacyModel
                         {
-                            Id = int.Parse(Drugss[0]),
+                            Id = int.Parse(Drugss[0]) -1,
                             Name = Drugss[1].ToString(),
                             Description = Drugss[2].ToString(),
                             Production_Factory = Drugss[3].ToString(),
@@ -326,7 +328,7 @@ namespace L3_DAVH_AFPE.Controllers
                         Singleton.Instance.inventory.InsertAtEnd(newDrug);
                         if (newDrug.Quantity > 0)
                         {
-                            Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = contador++ }, Singleton.Instance.guide.Root);
+                            Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = newDrug.Id  }, Singleton.Instance.guide.Root);
                         }
                     }
                     catch (Exception e)

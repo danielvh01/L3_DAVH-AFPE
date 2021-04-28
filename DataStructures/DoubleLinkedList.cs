@@ -285,16 +285,16 @@ namespace DataStructures
             }
         }
 
-        public T Find(T value)
+        public T Find(Func<T,bool> comparer)
         {
             Node<T> temp = First;
-            while (temp != null && temp.value.CompareTo(value) < 0)
+            while (temp != null && !comparer.Invoke(temp.value))
             {
                 temp = temp.next;
             }
             if (temp != null)
             {
-                if (temp.value.CompareTo(value) == 0)
+                if (comparer.Invoke(temp.value))
                 {
                     return temp.value;
                 }
