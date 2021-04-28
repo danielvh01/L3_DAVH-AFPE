@@ -5,6 +5,7 @@
 }
 
 <h1>Import inventory</h1>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -27,15 +28,26 @@
     </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@if (TempData["testmsg"] != null)
+{
+<script type="text/javascript">
+       alert("@TempData["testmsg"]");
+</script>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-            $(document).ready(function () {
-                $('.custom-file-input').on("change", function () {
-                    var fileName = $(this).val().split("\\").pop();
-                    $(this).next('.custom-file-label').html(fileName);
-                });
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
             });
+        });
     </script>
 }
+

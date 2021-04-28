@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "ViewTreeIO";
+}
+
+<h1>In-Order</h1>
+
+<a class="btn btn-success" asp-action="InOrder">Export Guide</a>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<pre>
+@L3_DAVH_AFPE.Models.Data.Singleton.Instance.tree
+</pre>

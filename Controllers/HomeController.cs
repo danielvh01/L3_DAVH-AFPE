@@ -1,11 +1,7 @@
 ﻿using L3_DAVH_AFPE.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace L3_DAVH_AFPE.Controllers
 {
@@ -27,7 +23,6 @@ namespace L3_DAVH_AFPE.Controllers
         {
             return View();
         }
-
         public IActionResult IndexPharmacy()
         {
             return RedirectToAction("Import", ("Pharmacy"));

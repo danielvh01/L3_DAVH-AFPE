@@ -1,20 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+/* Unmerged change from project 'DataStructures'
+Before:
+using System.Collections;
+After:
+using System;
+using System.Collections;
+*/
+using System;
+using System.Collections;
+using System.
+/* Unmerged change from project 'DataStructures'
+Before:
 using System;
 using System.Threading.Tasks;
+After:
+using System.Threading.Tasks;
+*/
+Collections.Generic;
 
-namespace L3_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
+
     public class DoubleLinkedList<T> : IEnumerable<T> where T : IComparable
     {
-        #region Variables
         Node<T> First;
         Node<T> End;
         public int Length = 0;
-        #endregion
 
-        #region Methods
         public void InsertAtStart(T value)
         {
             Node<T> node = new Node<T>();
@@ -59,6 +71,7 @@ namespace L3_DAVH_AFPE.Models.Data
             {
                 First = newNode;
                 End = newNode;
+                Length++;
             }
             else
             {
@@ -209,7 +222,7 @@ namespace L3_DAVH_AFPE.Models.Data
                 {
                     Node<T> node = First;
                     int cont = 0;
-                    while (node != null && cont < position - 1)
+                    while (node != null && cont < position)
                     {
                         node = node.next;
                         cont++;
@@ -230,18 +243,34 @@ namespace L3_DAVH_AFPE.Models.Data
             }
         }
 
-        public int GetPositionOf(T value)
+        public bool Exists(Func<T, bool> comparer)
+        {
+            Node<T> temp = First;
+            while (temp != null)
+            {
+                if (comparer.Invoke(temp.value))
+                {
+                    return true;
+                }
+                else
+                {
+                    temp = temp.next;
+                }
+            }
+            return false;
+        }
+        public int GetPositionOf(Func<T, bool> comparer)
         {
             Node<T> temp = First;
             int cont = 0;
-            while (temp != null && temp.value.CompareTo(value) < 0)
+            while (temp != null && !comparer.Invoke(temp.value))
             {
                 temp = temp.next;
                 cont++;
             }
             if (temp != null)
             {
-                if (temp.value.CompareTo(value) == 0)
+                if (comparer.Invoke(temp.value))
                 {
                     return cont;
                 }
@@ -256,16 +285,16 @@ namespace L3_DAVH_AFPE.Models.Data
             }
         }
 
-        public T Find(T value)
+        public T Find(Func<T,bool> comparer)
         {
             Node<T> temp = First;
-            while (temp != null && temp.value.CompareTo(value) < 0)
+            while (temp != null && !comparer.Invoke(temp.value))
             {
                 temp = temp.next;
             }
             if (temp != null)
             {
-                if (temp.value.CompareTo(value) == 0)
+                if (comparer.Invoke(temp.value))
                 {
                     return temp.value;
                 }
@@ -293,7 +322,5 @@ namespace L3_DAVH_AFPE.Models.Data
         {
             return GetEnumerator();
         }
-
-        #endregion
     }
 }
