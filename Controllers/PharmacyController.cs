@@ -190,6 +190,10 @@ namespace L3_DAVH_AFPE.Controllers
                 PharmacyModel x = Singleton.Instance.inventory.Get(ID);
                 int idx = Singleton.Instance.orders.GetPositionOf(y => y.Name == x.Name);
                 PharmacyModel a = Singleton.Instance.orders.Get(idx);
+                if (x.Quantity == 0)
+                {
+                    Singleton.Instance.guide.Insert(new Drug { name = x.Name, numberline = x.Id }, Singleton.Instance.guide.Root);
+                }
                 x.Quantity += a.Quantity;
                 Singleton.Instance.orders.Delete(idx);
                 return RedirectToAction(nameof(Index));
