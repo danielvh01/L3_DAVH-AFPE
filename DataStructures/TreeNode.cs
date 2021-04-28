@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace L3_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
     public class TreeNode<T> where T : IComparable
     {
-        
+
         public TreeNode<T> parent { get; set; }
         public TreeNode<T> left { get; set; }
         public TreeNode<T> right { get; set; }

@@ -1,5 +1,3 @@
-using System;
-
 namespace L3_DAVH_AFPE.Models
 {
     public class ErrorViewModel

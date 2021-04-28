@@ -1,50 +1,42 @@
-﻿@model L3_DAVH_AFPE.Models.Cart
+﻿@model L3_DAVH_AFPE.Models.PharmacyModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to discard this drug?</h3>
 <div>
-    <h4>Order</h4>
     <hr />
-    <dl class="row">       
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.clientName)
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.clientName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NIT)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NIT)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.address)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Production_Factory)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.address)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Production_Factory)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.amount)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.amount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.product)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Discard drug from order" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
