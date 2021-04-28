@@ -87,7 +87,7 @@ namespace L3_DAVH_AFPE.Controllers
                 x.Quantity -= newOrder.Quantity;
                 if (x.Quantity == 0)
                 {
-                    Singleton.Instance.guide.Delete(Singleton.Instance.guide.Root, new Drug { name = x.Name });
+                    Singleton.Instance.guide.Root = Singleton.Instance.guide.Delete(Singleton.Instance.guide.Root, new Drug { name = x.Name });
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -296,7 +296,6 @@ namespace L3_DAVH_AFPE.Controllers
         [HttpPost]
         public ActionResult Import(FileModel model)
         {
-            int contador = 0;
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -332,7 +331,7 @@ namespace L3_DAVH_AFPE.Controllers
                         Singleton.Instance.inventory.InsertAtEnd(newDrug);
                         if (newDrug.Quantity > 0)
                         {
-                            Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = newDrug.Id  }, Singleton.Instance.guide.Root);
+                            Singleton.Instance.guide.Root = Singleton.Instance.guide.Insert(new Drug { name = Drugss[1], numberline = newDrug.Id  }, Singleton.Instance.guide.Root);
                         }
                     }
                     catch (Exception e)

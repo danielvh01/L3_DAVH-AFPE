@@ -18,16 +18,10 @@ namespace DataStructures
         #region Methods
         public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
         {
-            TreeNode<T> temp = null;
             if (pNode == null)
             {
-                temp = new TreeNode<T>(newvalue);
-                if (lenght == 0)
-                {
-                    Root = temp;
-                }
                 lenght++;
-                return temp;
+                return new TreeNode<T>(newvalue);
             }
             if (newvalue.CompareTo(pNode.value) > 0)
             {
@@ -157,7 +151,7 @@ namespace DataStructures
             int balance = getBalance(node);
 
             if (balance > 1 && getBalance(node.left) <= 0) //If node becomes with desbalance, it will be compared with the 4 possible cases of rotations.
-                                                           //Left->Left
+                                                          //Left->Left
             {
                 return rightRotate(node);
             }
